@@ -4,7 +4,8 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "dependencies": {
-    "concurrently": "^4.1.2"
+    "concurrently": "^4.1.2",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {},
   "scripts": {
