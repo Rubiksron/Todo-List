@@ -4,28 +4,37 @@ import AddTodo from './components/AddTodo';
 import Header from './components/layout/Header';
 import About from './components/pages/About';
 import Todos from './components/Todos';
+import uuid from 'uuid'
 import axios from 'axios';
 
 import './App.css';
 
 class App extends Component {
   state = {
-    todos: []
+    todos: [
+      {
+        id: 1,
+        title: 'Make List'
+      }
+    ]
   }
 
   componentDidMount() {
-    //grab todos from localStorage
+    console.log('grabbing local storage...');
     var parsedStateObject = JSON.parse(localStorage.getItem('stateObj'));
-    console.log('parsedStateObject', parsedStateObject);
-    // this.setState({ todos:[...this.state.todos, parsedStateObject] })
-    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=5')
-    .then(res => this.setState({ todos:res.data }));
+    if(this.state.todos) {
+      this.setState({ todos:this.state.todos })
+    } else {
+        this.setState({ todos:parsedStateObject })
+    }
+    console.log('parsedStateObject: ', parsedStateObject);
+    // axios.get('https://jsonplaceholder.typicode.com/todos?_limit=5')
+    // .then(res => this.setState({ todos:res.data }));
   }
 
   deleteTodo = (id) => {
-    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
-      .then(res => this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] }))
-      .catch(err => (err))
+      this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] })
+      //now store state in localStorage to update!!!!!!!!
     }
 
     markComplete = (id) => {
@@ -37,28 +46,38 @@ class App extends Component {
       })
     })
   }
-  //The below function will add to the state object, which is proved by the console.log in the last .then() showing 6 todos, not 5, after using the input to create another todo.
+
   addTodo = (title) => {
-    axios.post('https://jsonplaceholder.typicode.com/todos', {
-      title:title,
+    console.log('this.state', this.state);
+
+    let newTodo = {
+      id: this.state.todos.length + 1,
+      title: title,
       completed: false
-    })
-    .then(res => this.setState({ todos: [...this.state.todos, res.data]}))
-    // .then((res) => console.log('res.data: ', res.data))
-    .then(() => {
-      let stateObj = this.state.todos;
-      console.log('this.state.todos: ', this.state.todos);
-      localStorage.setItem('stateObj', JSON.stringify(stateObj));
-    })
-    .then(() => console.log('this.state: ', this.state))
-    .then(() => {
-      let parsedStateObject = JSON.parse(localStorage.getItem('stateObj'));
-      console.log('parsedStateObject', parsedStateObject);
-    })
-    .catch(err => (err))
+    }
+
+    this.setState({ todos: [...this.state.todos, newTodo]})
+    console.log('this.state.todos in addTodo(): ' ,this.state.todos);
+    let stateObj = this.state.todos;
+    localStorage.setItem('stateObj', JSON.stringify(stateObj));
+    console.log('stateObj: ', stateObj);
+    // axios.post('https://jsonplaceholder.typicode.com/todos', newTodo)
+    // .then(res => this.setState({ todos: [...this.state.todos, res.data]}))
+    // .then(() => {
+    //   let stateObj = this.state.todos;
+    //   // console.log('this.state.todos: ', this.state.todos);
+    //   localStorage.setItem('stateObj', JSON.stringify(stateObj));
+    // })
+    // .then(() => console.log('this.state: ', this.state))
+    // .then(() => {
+    //   let parsedStateObject = JSON.parse(localStorage.getItem('stateObj'));
+    //   console.log('parsedStateObject', parsedStateObject);
+    // })
+    // .catch(err => (err))
   }
 
   render() {
+    console.log('this.state in render():  ', this.state);
     return (
       <Router>
         <div className="App">
