@@ -36,9 +36,9 @@ class App extends Component {
 }
 //Deleting the completed todo from localStorage
 deleteTodo = (id) => {
-  this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] })
-  let stateObj = this.state.todos;
-  localStorage.setItem('stateObj', JSON.stringify(stateObj));
+  let filtered = [...this.state.todos.filter(todo => todo.id !== id)]
+  localStorage.setItem('stateObj', JSON.stringify(filtered));
+  this.setState({ todos: filtered })
 }
 //Adding a todo to localStorage
 addTodo = (title) => {
@@ -48,12 +48,13 @@ addTodo = (title) => {
     title: title,
     completed: false
   }
-  this.setState({ todos: [...this.state.todos, newTodo]})
-  let stateObj = this.state.todos;
-  localStorage.setItem('stateObj', JSON.stringify(stateObj));
+  let addTodo = [...this.state.todos, newTodo]
+  localStorage.setItem('stateObj', JSON.stringify(addTodo));
+  this.setState({ todos: addTodo })
 }
 
 render() {
+  console.log('this.state.todos', this.state.todos);
     return (
       <Router>
         <div className="App">
