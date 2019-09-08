@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const DataSchema = new Schema(
   {
-    id: Number,
-    todo: String
+    todo: String,
+    id: Number
   },
   {
     timestamps: true
