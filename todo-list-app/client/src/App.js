@@ -5,7 +5,7 @@ import Header from './components/layout/Header';
 import About from './components/pages/About';
 import Todos from './components/Todos';
 import uuid from 'uuid'
-import axios from 'axios';
+// import axios from 'axios';
 
 import './App.css';
 
@@ -20,16 +20,14 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('grabbing local storage...');
+    console.log('componentDidMount-start-grabbing local storage...');
     var parsedStateObject = JSON.parse(localStorage.getItem('stateObj'));
     if(this.state.todos) {
       this.setState({ todos:this.state.todos })
     } else {
         this.setState({ todos:parsedStateObject })
     }
-    console.log('parsedStateObject: ', parsedStateObject);
-    // axios.get('https://jsonplaceholder.typicode.com/todos?_limit=5')
-    // .then(res => this.setState({ todos:res.data }));
+    console.log('componentDidMount-end-parsedStateObject: ', parsedStateObject);
   }
 
   deleteTodo = (id) => {
@@ -49,9 +47,9 @@ class App extends Component {
 
   addTodo = (title) => {
     console.log('this.state', this.state);
-
+    let id = uuid();
     let newTodo = {
-      id: this.state.todos.length + 1,
+      id: id,
       title: title,
       completed: false
     }
@@ -60,20 +58,7 @@ class App extends Component {
     console.log('this.state.todos in addTodo(): ' ,this.state.todos);
     let stateObj = this.state.todos;
     localStorage.setItem('stateObj', JSON.stringify(stateObj));
-    console.log('stateObj: ', stateObj);
-    // axios.post('https://jsonplaceholder.typicode.com/todos', newTodo)
-    // .then(res => this.setState({ todos: [...this.state.todos, res.data]}))
-    // .then(() => {
-    //   let stateObj = this.state.todos;
-    //   // console.log('this.state.todos: ', this.state.todos);
-    //   localStorage.setItem('stateObj', JSON.stringify(stateObj));
-    // })
-    // .then(() => console.log('this.state: ', this.state))
-    // .then(() => {
-    //   let parsedStateObject = JSON.parse(localStorage.getItem('stateObj'));
-    //   console.log('parsedStateObject', parsedStateObject);
-    // })
-    // .catch(err => (err))
+    console.log('stateObj in addTodo(): ', stateObj);
   }
 
   render() {
