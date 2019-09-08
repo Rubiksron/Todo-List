@@ -50,7 +50,7 @@ addTodo = (title) => {
 }
 
 render() {
-  console.log('this.state.todos', this.state.todos);
+  // console.log('this.state.todos', this.state.todos);
     return (
       <Router>
         <div className="App">
