@@ -6,7 +6,7 @@
   "engines": {
     "npm":"6.9.0",
     "node":"10.16.3"
-  }
+  },
   "dependencies": {
     "concurrently": "^4.1.2",
     "uuid": "^3.3.3"
