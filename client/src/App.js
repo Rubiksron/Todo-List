@@ -11,7 +11,12 @@ import './App.css';
 //Main App component
 class App extends Component {
   state = {
-    todos: []
+    todos: [
+      {
+        title: 'Make List',
+        id: 1
+      }
+    ]
   }
 
   //Grabbing todos from localStorage
