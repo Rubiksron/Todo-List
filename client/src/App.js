@@ -48,13 +48,13 @@ addTodo = (title) => {
     title: title,
     completed: false
   }
+
   let addTodo = [...this.state.todos, newTodo]
   localStorage.setItem('stateObj', JSON.stringify(addTodo));
   this.setState({ todos: addTodo })
 }
 
 render() {
-  console.log('this.state.todos', this.state.todos);
     return (
       <Router>
         <div className="App">
